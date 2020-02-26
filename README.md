@@ -1,5 +1,9 @@
 # vue-lottery
 
+This project is was made as a task from IGTI's Reactive Development discipline.
+
+It does not contains all Vue.js best practices. It just implements a simple lottery using components and Vue's reactivity.
+
 ## Project setup
 ```
 npm install
