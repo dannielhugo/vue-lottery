@@ -23,7 +23,8 @@
           class="mr-6"
         >
           <base-number-input
-            :value="number"
+            :value="+number"
+            :invalid-values="numbers"
             @change="onNumberChange($event, index)"
             @has-error="onNumberError"
           />
@@ -46,7 +47,7 @@
           color="green darken-1"
           text
           :disabled="invalid"
-          @click="closeDialog"
+          @click="confirmGame"
         >
           Confirmar novo jogo
         </v-btn>
@@ -60,7 +61,6 @@ import BaseNumberInput from './base/BaseNumberInput.vue';
 
 import { randomNumbers } from '../utils/randomHelpers';
 import { MIN_NUMBER, MAX_NUMBER, LOTTERY_NUMBERS } from '../utils/constants';
-
 
 export default {
   name: 'NewGameDialog',
@@ -80,7 +80,7 @@ export default {
     return {
       dialog: false,
       numbers: [],
-      invalid: true,
+      invalid: false,
     };
   },
 
@@ -102,7 +102,7 @@ export default {
     },
     onNumberChange(value, index) {
       if (value) {
-        this.numbers[index] = value;
+        this.$set(this.numbers, index, +value);
       }
     },
     onNumberError(value) {
@@ -110,6 +110,11 @@ export default {
     },
     getOffset(index) {
       return index % 0 === 0 ? 0 : 2;
+    },
+    confirmGame() {
+      this.$emit('input', this.numbers);
+      this.$emit('close-dialog');
+      this.dialog = false;
     },
   },
 

@@ -28,7 +28,11 @@
               @new-game="open = true"
             />
 
-            <new-game-dialog :open="open" @close-dialog="open = false"/>
+            <new-game-dialog
+              :open="open"
+              @close-dialog="open = false"
+              @input="addGame"
+            />
           </v-col>
         </v-row>
       </v-container>
@@ -102,6 +106,12 @@ export default {
           this.loading = false;
         },
       );
+    },
+    addGame(values) {
+      this.games.push({
+        custom: true,
+        numbers: [...values],
+      });
     },
   },
 };
